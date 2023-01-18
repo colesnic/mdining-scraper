@@ -34,6 +34,7 @@ soup3 = BeautifulSoup(req3.content, "html.parser")
 def starterMessage(dt_string):
     print("\n" + "Hello! It is " + dt_string + "." + "\n" + "\n" + "Here's Mojo's menu today:" + "\n")
 
+# chop up time and make it prettier
 def get_pretty_time(): 
     now = datetime.now()
     dt_string = now.strftime("%H:%M")
@@ -49,6 +50,7 @@ def get_pretty_time():
 
     return str(easyreadtime);
 
+#get time
 def get_numerical_time(): 
 
     now = datetime.now()
@@ -62,6 +64,7 @@ def printAllBreakfast(dt_string):
     print("Hello! It is " + dt_string + "." + "\n" + "\n" + "Here's Mojo's breakfast menu today:" + "\n")
     brekFoods = breakfast.select('div.item-name')
 
+    # randomization for scrambled eggs text
     if (datetime.today().isoweekday() == 4):
         for food in brekFoods:
             if ("Scrambled Eggs" not in food.text):
@@ -77,10 +80,11 @@ def printAllLunch(dt_string):
     lunchFoods = lunch.select('div.item-name')
     for food in lunchFoods:
         foodstr = food.text
+        # segment pizzas out from main food list
         if ("Pizza" not in foodstr):
             print('\t' + food.text)
     print("\n" + "And here are the pizzas:" + "\n")
-
+    #print out pizzas by themselves
     for food in lunchFoods:
         foodstr = food.text
         if ("Pizza" in foodstr):
@@ -104,7 +108,7 @@ def printAllDinner(dt_string):
         if ("Pizza" not in foodstr):
             print('\t' + food.text)
     print("\n" + "And here are the pizzas:" + "\n")
-
+    # print out pizzas seperately
     for food in dinnerFoods:
         foodstr = food.text
         if ("Pizza" in foodstr):
@@ -117,6 +121,7 @@ def printAllDinner(dt_string):
     if (pizzaCounter == 0):
         print("and no pizza :(")
 
+# retrieve Michigan Daily Article
 def dailyArticleTitle(): 
     print ("\n" + "And the headline from the Michigan Daily:" + "\n")
     print(soup2.select('h2.entry-title')[0].text + "\n")
@@ -140,5 +145,6 @@ if (meal == "lunch") or (meal == "Lunch"):
     printAllLunch(get_pretty_time())
 if (meal == "breakfast") or (meal == "Breakfast") or (meal == "Brek") or (meal == "brek"):
     printAllBreakfast(get_pretty_time())
+# retrieve Michigan Daily Article
 dailyArticleTitle()
 #sportsTitle()
